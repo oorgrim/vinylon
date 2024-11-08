@@ -1,0 +1,21 @@
+{% block content %}
+
+    <div class="header-bar">
+        <h1>Profile</h
+
+        <a href="{% url 'tasks' %}">&#8592; Back</a>
+
+    </div>
+
+    {% if user.profile.profile_pic %}
+       <a href="{% url 'edit_user_profile' profile.id %}"><button class="button">Edit</button></a>
+    {%else%}
+      <img src="{% static '\images\profile\user.png' %}" height=100 width=100><br><br>
+    {% if user.id == profile.user.id %}
+      {% endif %}
+
+
+
+    </div>
+
+{% endblock content %}

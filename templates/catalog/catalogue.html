@@ -1,0 +1,51 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+    <div class="tags">
+        <form method="get" onchange='tagsSubmit()'>
+            {% csrf_token %}
+            
+            {% comment %}
+                {% for tag in tags %}
+                    <input type="checkbox" value="{{ tag.name }}">
+                {% endfor %}
+               
+            {% endcomment %}
+                
+            {{ form.table}}
+        </form>
+    </div>
+    <div class="main">
+        {% for vinyl in vinyls %}
+            <div class="vinyl_record">
+                <img class="cover" src="/media/{{ vinyl.cover }}">
+                <h1 class="title"><a>{{vinyl.artist.name}}</a></h1>
+                <h1 class="title"><a>{{vinyl.title}}</a></h1>
+                <h3 class="artist">{{vinyl.artist}}</h3>
+                <h1 class="price">{{vinyl.price}} $</h1>
+                <button class="to_stock">Add to cart</button>
+            </div>
+        {% endfor %}
+    </div>
+    <script> 
+    const checkboxList = document.forms[1].children; 
+
+    window.onload = function(){
+        for(let i = 0; i < checkboxList.length; i++){
+            checkboxList[i].checked = localStorage.getItem(`checkbox${i}`)
+            console.log(checkboxList[i])
+        }
+    } 
+
+    function tagsSubmit() {
+        for(let i = 0; i < checkboxList.length; i++){
+            if(localStorage.getItem(`checkbox${i}`) == true){
+                localStorage.setItem(`checkbox${i}`, true)
+            }
+            else{
+                localStorage.setItem(`checkbox${i}`, false)
+            }
+            console.log(localStorage.getItem(`checkbox${i}`))
+        }
+    }
+    </script>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Результаты поиска" %}{% endblock %}
+
+{% block content %}
+    <h1>{% trans "Результаты поиска" %}</h1>
+
+    {% if vinyls %}
+        <ul>
+            {% for vinyl in vinyls %}
+                <li>{{ vinyl.title }} - {{ vinyl.artist }} - {{ vinyl.price }} $</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>{% trans "Ничего не найдено" }</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,121 @@
+
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "Профиль" %}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'deps/css/profile.css' %}">
+
+<div class="profile-page">
+    <div class="sidebar">
+        <a href="{% url 'catalogue:catalogue' %}">{% trans "Перейти в каталог" %}</a>
+    </div>
+
+    <div class="profile-info text-center">
+        <h1>{% trans "Профиль пользователя" %}</h1>
+        <p>{% trans "Добро пожаловать" %}, {{ user.username }}!</p>
+    </div>
+
+    <div class="container mt-5">
+        <div class="info">
+            <div class="profile-header d-flex align-items-center">
+                <div class="avatar">
+                    {% if request.user.is_authenticated %}
+                        {% if request.user.userprofile.avatar %}
+                            <img src="{{ request.user.userprofile.avatar.url }}" alt="Аватар" class="img-fluid" />
+                            <form method="POST" action="{% url 'users:clear_avatar' %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm mt-2">{% trans "Очистить аватар" %}</button>
+                            </form>
+                        {% else %}
+                            <img src="{% static 'deps/images/default_ava.jpg' %}" alt="{% trans 'Дефолтный аватар' %}" class="img-fluid" />
+                        {% endif %}
+                    {% else %}
+                        <p>{% trans "Пожалуйста, войдите в систему, чтобы увидеть ваш аватар." %}</p>
+                    {% endif %}
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-8 offset-md-4">
+                        <form method="POST" action="{% url 'users:edit_profile' %}" id="profileForm" enctype="multipart/form-data" style="display:none;">
+                            {% csrf_token %}
+                            <div class="firstLastNamesDiv">
+                                <div class="firstNameDiv">
+                                    <label for="first_name">{% trans "Имя" %}:</label>
+                                    <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" class="form-control" required>
+                                </div>
+                                <div class="lastNameDiv">
+                                    <label for="last_name">{% trans "Фамилия" %}:</label>
+                                    <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="lastNameDiv">
+                                <label for="email">{% trans "Email" %}:</label>
+                                <input type="email" id="email" name="email" value="{{ user.email }}" class="form-control" required>
+                            </div>
+                            <div class="lastNameDiv">
+                                <label for="phone">{% trans "Телефон" %}:</label>
+                                <input type="text" id="phone" name="phone" value="{{ user.userprofile.phone }}" class="form-control">
+                            </div>
+                            <div class="lastNameDiv">
+                                <label for="avatar">{% trans "Загрузить аватар" %}:</label>
+                                <input type="file" id="avatar" name="avatar" class="form-control">
+                            </div>
+                            <button type="submit" class="saveBtn btn btn-primary mt-3">{% trans "Сохранить изменения" %}</button>
+                        </form>
+
+                        <div id="profileDisplay">
+                            <div class="firstNameDiv">
+                                <p><strong>{% trans "Имя" %}:</strong> <span id="displayFirstName">{{ user.first_name }}</span></p>
+                            </div>
+                            <div class="lastNameDiv">
+                                <p><strong>{% trans "Фамилия" %}:</strong> <span id="displayLastName">{{ user.last_name }}</span></p>
+                            </div>
+                            <div class="lastNameDiv">
+                                <p><strong>{% trans "Email" %}:</strong> <span id="displayEmail">{{ user.email }}</span></p>
+                            </div>
+                            <div class="lastNameDiv">
+                                <p><strong>{% trans "Телефон" %}:</strong> <span id="displayPhone">{{ user.userprofile.phone }}</span></p>
+                            </div>
+                            <button class="btn btn-secondary mt-3" id="editButton">{% trans "Редактировать" %}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>        
+        </div>
+
+        <div class="col-md-8 mt-4">
+            <h4>{% trans "Ваши заказы" %}:</h4>
+            <ul class="list-group">
+                {% for order in orders %}
+                    <li class="list-group-item">
+                        {% trans "Заказ №" %}{{ order.id }} {% trans "от" %} {{ order.created_at }} - {% trans "Статус:" %} {{ order.status }}
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">{% trans "У вас нет заказов." %}</li>
+                {% endfor %}
+            </ul>
+
+            <h4 class="mt-4">{% trans "Ваша корзина" %}:</h4>
+            <ul class="list-group">
+                {% for item in cart_items %}
+                    <li class="list-group-item">
+                        {{ item.vinyl_record.title }} - {{ item.quantity }} {% trans "шт." %} - {{ item.vinyl_record.price }} {% trans "руб." %}
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">{% trans "Ваша корзина пуста." %}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("editButton").onclick = function() {
+        document.getElementById("profileForm").style.display = "block"; 
+        document.getElementById("profileDisplay").style.display = "none"; //скрыла текст загчнеия
+    };
+</script>
+
+{% endblock %}

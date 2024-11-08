@@ -1,0 +1,113 @@
+body {
+  /* background-color: black; */
+  color: aliceblue;
+  font-family: "Unlock", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+h1 {
+  margin-top: 100px;
+  font-size: 70px;
+}
+
+h2 {
+  font-size: 40px;
+}
+
+#vinylImg {
+  margin-top: 50px;
+  width: 700px;
+  height: auto;
+  transition: transform 0.1s ease-out;
+}
+
+/* Анимация вращения при прокрутке */
+body {
+  scroll-behavior: smooth;
+}
+
+body::-webkit-scrollbar {
+  width: 5px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+.catalogue {
+  background-color: rgb(71, 145, 145);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  padding-bottom: 70px;
+}
+
+.catalogue h1 {
+  margin-bottom: 20px; /* отступ между заголовком и изображениями */
+  font-size: 2em;
+  text-align: center;
+  color: aliceblue;
+}
+
+.catalogueContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 100px; /* расстояние между изображениями */
+  justify-content: center;
+}
+
+.catalogueImgs {
+  width: 250px;
+  height: auto;
+}
+
+.h1Catalogue {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 70px;
+  padding-bottom: 30px;
+}
+
+.bestsellers {
+  background-color: black;
+  padding-bottom: 20px;
+}
+
+.what {
+  background-color: rgb(71, 145, 145);
+}
+
+.what p {
+  width: 800px;
+  font-size: 20px;
+  text-align: center;
+  padding-bottom: 40px;
+}
+
+footer {
+  background-color: #222;
+  color: #ccc;
+}
+
+footer a {
+  color: #ddd;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #fff;
+}
+
+footer img {
+  filter: invert(100%);
+}
+.whath1 {
+  padding-top: 70px;
+  padding-bottom: 40px;
+}
+#h1a {
+  font-size: 70px;
+}

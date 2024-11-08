@@ -1,0 +1,110 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'deps/css/bootstrap/bootstrap.min.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unlock&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'deps/css/my_css.css' %}">
+    <title>{{ title }}</title>
+    <style>
+        body {
+            background-color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'main:home' %}">Home</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li><a class="nav-link text-white" href="{% url 'catalogue:catalogue' %}">Catalogue</a></li>
+                        <li>
+                            <a href="{% url 'cart:cart_summary' %}">
+                                <button type="button" class="btn btn-dark btn-secondary d-flex" id="modalButton" aria-expanded="false">
+                                    <img class="mx-1" src="{% static 'deps/icons/basket2-fill.svg' %}" alt="Catalog Icon" width="24" height="24">
+                                </button>
+                            </a>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <li>
+                            <form action="{% url 'users:logout' %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="nav-link text-white" style="border: none; background: none; cursor: pointer;">
+                                    Log In
+                                </button>
+                            </form>
+                        </li>
+                        {% else %}
+                        <li><a class="nav-link text-white" href="{% url 'users:login' %}">Log Out</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    {% block  content%}
+    {% endblock  %}
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5 class="mb-3">Vinylon</h5>
+                    <p>The music that is always with you. Vinyl on offers a wide selection of vinyl records and audio so you can enjoy your favorite tunes anytime, anywhere.</p>
+                </div>
+                
+                <div class="col-md-4 mb-3">
+                    <h5 class="mb-3">Полезные ссылки</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="" class="text-white">Главная</a></li>
+                        <li><a href="{% url 'catalogue:catalogue' %}" class="text-white">Каталог</a></li>
+                        <li><a href="{% url 'users:profile' %}" class="text-white">Личный кабинет</a></li>
+                    </ul>
+                </div>
+    
+                <div class="col-md-4 mb-3">
+                    <h5 class="mb-3">Следите за нами</h5>
+                    <div class="d-flex">
+                        <a href="https://www.facebook.com" target="_blank">
+                            <img src="{% static 'deps/icons/facebook.svg' %}" alt="Facebook" width="32" class="me-3">
+                        </a>
+                        <a href="https://www.instagram.com" target="_blank">
+                            <img src="{% static 'deps/icons/instagram.svg' %}" alt="Instagram" width="32" class="me-3">
+                        </a>
+                        <a href="https://www.twitter.com" target="_blank">
+                            <img src="{% static 'deps/icons/twitter.svg' %}" alt="Twitter" width="32" class="me-3">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-3">
+                <small>© 2024 Vinylon. Все права защищены.</small>
+            </div>
+        </div>
+    </footer>    
+
+    <script src="{% static 'deps/js/jquery/jquery-3.7.0.min.js' %}"></script>
+    <script src="{% static 'deps/js/bootstrap/bootstrap.bundle.min.js' %}"></script>
+    <script>
+        window.addEventListener("scroll", function() {
+            const img = document.querySelector("#vinylImg"); 
+            const rotation = window.scrollY / 3;
+            img.style.transform = `rotate(${rotation}deg)`;
+        });
+    </script>
+    
+</body>
+
+</html>

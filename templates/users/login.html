@@ -1,0 +1,91 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'deps/css/reg.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>{% trans "Вход" %}</title>
+</head>
+<body>
+    <div class="wrapper" style="width: 1050px; height: 650px;">
+        <span class="bg-animate"></span>
+        <span class="bg-animate2"></span>
+
+        <div class="form-box login">
+            <h2 class="animation" style="--i:0">{% trans "Вход" %}</h2>
+            <form method="post" action="{% url 'users:login' %}">
+                {% csrf_token %}
+                <div class="input-box animation" style="--i:1">
+                    <input type="text" name="username" required>
+                    <label for="username">{% trans "Имя пользователя" %}</label>
+                    <i class='bx bx-user'></i>
+                </div>
+                <div class="input-box animation" style="--i:2">
+                    <input type="password" name="password" required>
+                    <label for="password">{% trans "Пароль" %}</label>
+                    <i class='bx bx-lock-alt'></i>
+                </div>
+                <button type="submit" class="btn animation" style="--i:3">{% trans "Войти" %}</button>
+                <div class="logreg-link animation" style="--i:4">
+                    <p>{% trans "Нет аккаунта?" %}
+                        <a href="{% url 'users:register' %}" class="register-link">{% trans "Зарегистрироваться" %}</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+        <div class="info-text login">
+            <h2 class="animation" style="--i:0;">{% trans "С возвращением!" %}</h2>
+            <p class="animation" style="--i:1;">Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+        </div>
+
+        <div class="form-box register" style="display: none;"> 
+            <h2 class="animation" style="--i:17;">{% trans "Регистрация" %}</h2>
+            <form method="post" action="{% url 'users:register' %}">
+                {% csrf_token %}
+                <div class="input-box animation" style="--i:18;">
+                    <input type="text" name="username" required>
+                    <label for="username">{% trans "Имя пользователя" %}</label>
+                    <i class='bx bx-user'></i>
+                </div>
+                <div class="input-box animation" style="--i:19;">
+                    <input type="text" name="first_name" required>
+                    <label for="first_name">{% trans "Имя" %}</label>
+                </div>
+                <div class="input-box animation" style="--i:20;">
+                    <input type="text" name="last_name" required>
+                    <label for="last_name">{% trans "Фамилия" %}</label>
+                </div>
+                <div class="input-box animation" style="--i:21;">
+                    <input type="email" name="email" required>
+                    <label for="email">{% trans "Email" %}</label>
+                    <i class='bx bx-envelope'></i>
+                </div>
+                <div class="input-box animation" style="--i:22;">
+                    <input type="password" name="password" required>
+                    <label for="password">{% trans "Пароль" %}</label>
+                    <i class='bx bx-lock-alt'></i>
+                </div>
+                <div class="input-box animation" style="--i:23;">
+                    <input type="password" name="password_confirm" required>
+                    <label for="password_confirm">{% trans "Подтвердите пароль" %}</label>
+                    <i class='bx bx-lock-alt'></i>
+                </div>
+                <button type="submit" class="btn animation" style="--i:24;">{% trans "Зарегистрироваться" %}</button>
+                <div class="logreg-link animation" style="--i:25;">
+                    <p>{% trans "Уже есть аккаунт?" %}
+                        <a href="#" class="login-link">{% trans "Войти" %}</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+        <div class="info-text register" style="display: none;"> 
+            <h2 class="animation" style="--i:17;">{% trans "Добро пожаловать!" %}</h2>
+            <p class="animation" style="--i:18;">Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+        </div>
+    </div>
+    <script src="{% static 'deps/js/reg.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!-- vinyls/templates/vinyls/create.html -->
+
+{% extends "base/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Добавить виниловую пластинку" %}{% endblock %}
+
+{% block content %}
+<h2>{% trans "Добавить виниловую пластинку" %}</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Сохранить</button>
+</form>
+<div>
+    {% include 'base/form_errors.html' %}
+</div>
+{% endblock %}

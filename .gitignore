@@ -1,0 +1,13 @@
+access.log
+
+node_modules/
+
+/coverage/
+
+venv/
+
+media/
+
+__pycache__/
+
+migrations/

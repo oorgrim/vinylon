@@ -1,0 +1,70 @@
+{% extends 'base/base.html' %}
+{% load i18n %}
+
+{% block title %}
+  {% trans 'Виниловые пластинки' %}
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="main-content">
+      <div class="vinyl-list">
+        <h1>{% trans 'Добро пожаловать на наш сайт' %}</h1>
+        <p>
+          {% trans 'Здесь вы можете заказать виниловые пластинки' %}
+        </p>
+
+        <!-- Основной контент с пластинками -->
+        <ul>
+          {% for vinyl in vinyls %}
+            <li>{{ vinyl.title }} - {{ vinyl.artist }} - {{ vinyl.price }} $</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Боковая панель для авторизованных пользователей -->
+      {% if user.is_authenticated %}
+        <div class="sidebar">
+          <h2>{% trans 'Ваши данные' %}</h2>
+          <p>
+            {% trans 'Пользователь' %}: {{ user.username }}
+          </p>
+          <h3>{% trans 'Ваши заказы' %}:</h3>
+          <ul>
+            {% for order in orders %}
+              <li>
+                {% trans 'Заказ' %}# {{ order.id }} от {{ order.created_at|date:'SHORT_DATE_FORMAT' }}
+              </li>
+            {% empty %}
+              <p>
+                {% trans 'Нет активных заказов' %}
+              </p>
+            {% endfor %}
+          </ul>
+          <div class="top-tags">
+            <h2>{% trans 'Топ 10 тегов' %}</h2>
+            <ul>
+              {% for tag in top_tags %}
+                <li>{{ tag.name }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      {% endif %}
+
+      <!-- Топ-10 тегов -->
+    </div>
+    <!-- Пагинация -->
+    <div class="pagination">
+      {% if is_paginated %}
+        <span>{% trans 'Страница' %} {{ page_obj.number }}{% trans 'из' %} {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_previous %}
+          <a href="?page={{ page_obj.previous_page_number }}">{% trans 'Назад' %}</a>
+        {% endif %}
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">{% trans 'Вперед' %}</a>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

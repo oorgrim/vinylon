@@ -1,0 +1,116 @@
+.tagsForm {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+    justify-content: center;
+}
+
+.tagsForm input[type="button"] {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: black;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.tagsForm input[type="button"]:hover {
+    background-color: white;
+    color: black;
+}
+
+.main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.vinyl_record {
+    background-color: #222;
+    color: white;
+    width: 250px;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vinyl_record:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.vinyl_record .cover {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.vinyl_record h1.title,
+.vinyl_record h1.artist,
+.vinyl_record h1.price {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+.vinyl_record h1.price {
+    color: #4caf50; 
+}
+
+.vinyl_record .to_stock {
+    background-color: #4caf50;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.vinyl_record .to_stock:hover {
+    background-color: #3e8e41;
+}
+
+.vinyl_tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+.vinyl_tags .tag {
+    padding: 5px 10px;
+    background-color: #333;
+    color: white;
+    border-radius: 15px;
+    font-size: 12px;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    color: white;
+    text-decoration: none;
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: black;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination a:hover {
+    background-color: white;
+    color: black;
+}

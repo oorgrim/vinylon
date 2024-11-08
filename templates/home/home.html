@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <center><h1>LISTEN WHAT YOU LOVE</h1></center>
+    <center><h2>here, in vinylon</h2>
+        <img id="vinylImg" src="{% static 'deps/images/bluea.png' %}" alt=""></center>
+        <div class="catalogue">
+        <h1 id="h1a" class="h1Catalogue">catalogue</h1>
+        <div class="catalogueContainer">
+            <img class="catalogueImgs" src="{% static 'deps/images/linkin-park-meteora.jpg' %}" alt="">
+            <img class="catalogueImgs" src="{% static 'deps/images/gojiramagma.jpg' %}" alt="">
+            <img class="catalogueImgs" src="{% static 'deps/images/Weezer blue album.jpg' %}" alt="">
+            <img class="catalogueImgs" src="{% static 'deps/images/Nightmare avenged sevenfold.jpeg' %}" alt="">
+        </div>
+        </div>
+        <div class="bestsellers">
+        <h1 class="h1Catalogue">bestsellers</h1>
+        <div class="catalogueContainer">
+            <img class="catalogueImgs" src="{% static 'deps/images/gojiramagma.jpg' %}" alt="">
+            <img class="catalogueImgs" src="{% static 'deps/images/image.png' %}" alt="">
+            <img class="catalogueImgs" src="{% static 'deps/images/Aenima tool.jpeg' %}" alt="">
+            <img class="catalogueImgs" src="{% static 'deps/images/minitestomidnight.jpg' %}" alt="">
+        </div>
+    </div>
+    <div class="what">
+        <h1 class="whath1 h1Catalogue">what can  you find you find in vinylon? </h1>
+        <div class="catalogueContainer">
+            <p>there you can find a wide range of albums and buy them. the main difference beetween us and f.e. spotify  and etc is that there you can purchase not all music in the internet - you can receive just albums that u want to listen to.</p>
+        </div>
+    </div>
+{% endblock %}
+
