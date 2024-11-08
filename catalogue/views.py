@@ -1,9 +1,9 @@
 from django.db import models
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView, ListView
+from django.views.generic import ListView, DetailView
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
-from .models import VinylRecord, Tag, AudioFile, Artist
+from .models import VinylRecord, Tag, Artist
 from django.db.models import Q
 from itertools import chain
 from icecream import ic
@@ -11,7 +11,7 @@ from django.shortcuts import render
 
 class CatalogueView(ListView):
     model = VinylRecord
-    template_name = "catalogue.html"
+    template_name = "catalogue/catalogue.html"
     context_object_name = 'vinyls'
     paginate_by = 10
 
@@ -33,30 +33,13 @@ class CatalogueView(ListView):
         return context
 
 
-class MediaPlayerView(TemplateView):
-    model = AudioFile
-    template_name = "mp3player.html"
-    context_object_name = 'audiofiles'
+class VinylDetail(DetailView):
+    model = VinylRecord
+    template_name = "catalogue/vinyl.html"
+    success_url = reverse_lazy("cart:cart_summary")
 
-    def get_queryset(self):
-        query = self.request.GET.get("q")
-        audiofiles = AudioFile.objects.all()
-
-        if query:
-            print(query)
-            audiofiles = AudioFile.objects.filter(
-                Q(title__icontains=query) | Q(vinyl_record__title__icontains=query)
-            )
-        return audiofiles
-
-    def get_context_data(self, **kwargs: any) -> dict:
+    def get_context_data(self, **kwargs: reverse_lazy) -> dict[str, any]:
         context = super().get_context_data(**kwargs)
-        context['audiofiles'] = self.get_queryset()
-        context['tags'] = Tag.objects.annotate(num_records=models.Count("records")).order_by("-num_records")[:10]
-        context['vinyls'] = VinylRecord.objects.all()
+        context['vinyl'] = self.get_object()
+        context['vinyls'] = VinylRecord.objects.all()[:10]
         return context
-        
-
-def VinylView(request, pk):
-    vinyl = VinylRecord.objects.get(id=pk)
-    return render(request, 'vinyl.html', {'vinyl': vinyl})

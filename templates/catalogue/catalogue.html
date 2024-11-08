@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'deps/css/catalogue.css'%}">
+
+    <form class="tagsForm">
+        {% for tag in tags %}
+            <input type="button" class="searchTag {{ tag.name }}" value="{{ tag.name }}" isClicked="false" onclick="buttonClick(this)">
+        {% endfor %}
+    </form>
+    <div class="main">
+        {% for vinyl in vinyls %}
+            <div class="vinyl_record">
+                <img class="cover" src="{{ vinyl.cover.url }}">
+                <h1 class="artist"><a>{{ vinyl.artist.name }}</a></h1>
+                <h1 class="title"><a>{{ vinyl.title }}</a></h1>
+                <h3 class="artist">{{ vinyl.artist }}</h3>
+                <h1 class="price">{{ vinyl.price }} $</h1>
+                <a href="{% url 'catalogue:vinyldetail' vinyl.id %}">View Vinyl</a>
+                <button type="button" value="{{vinyl.id}}" class="btn btn-secondary to_stock" id="add-cart">Add to cart</button>
+                <div class="vinyl_tags">
+                    {% for tag in vinyl.tags.all %}
+                        <div class="tag" data-tag="{{ tag.name }}">{{ tag.name }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="pagination">
+        {% if is_paginated %}
+            <span>{% trans 'Страница' %} {{ page_obj.number }}{% trans 'из' %} {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}">{% trans 'Назад' %}</a>
+            {% endif %}
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">{% trans 'Вперед' %}</a>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <script>
+                $(document).ready(function() {
+            // тут прверка нажатия и удаление
+            $('#test').click(function() {
+                alert('Button clicked!');
+            });
+
+            $(document).on('click', '.delete-vinyl', function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "cart:cart_delete" %}',
+                    data: {
+                        vinyl_id: $(this).data('index'),
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        action: 'post'
+                    },
+                    success: function(json) {
+                        location.reload();
+                    },
+                    error: function(xhr, errmsg, err) {
+                        console.error(xhr.status + ": " + xhr.responseText);
+                    }
+                });
+            });
+        });
+        
+        window.document.onload = function (){
+            localStorage.clear();
+        }
+
+        function addToStorage(tagQuery){
+            let tagList = document.getElementsByClassName("searchTag")
+            for(let i = 0; i < tagList.length; i++){
+                if(tagQuery == tagList[i].value){
+                    localStorage.setItem(`${tagList[i].value}`, tagList[i].value);              
+                }
+            }
+        }
+        function buttonClick(button) {
+            if (button.style.backgroundColor === 'black' || button.style.backgroundColor === 'white') {
+                button.style.backgroundColor = '#8EBFBA';
+                button.style.color = 'black';
+                addToStorage(button);
+            } 
+            else {
+                button.style.backgroundColor = 'black';
+                button.style.color = 'white';
+            }
+            for(let i=0; i<localStorage.length; i++) {
+                console.log(`${localStorage.key(i)}: ${localStorage.getItem(key)}`);
+            }
+        }
+        
+    </script>
+{% endblock %}

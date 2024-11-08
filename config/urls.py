@@ -36,5 +36,6 @@ urlpatterns += [
     path('users/', include('users.urls'), name='users'),
     path('catalogue/', include('catalogue.urls'), name='catalogue'),
     path('cart/', include('cart.urls'), name='cart'),
+    path('mediaplayer/', include('mediaplayer.urls'), name='mediaplayer'),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

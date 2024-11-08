@@ -1,14 +1,15 @@
 from django.shortcuts import render
 from django.db import models
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView
 from django.contrib.auth.models import User
 from django.db.models import Q
-from .models import VinylRecord, Tag, AudioFile, Artist
+from .models import AudioFile
+from catalogue.models import VinylRecord, Tag
 
 class MediaPlayerView(TemplateView):
     model = AudioFile
-    template_name = "mp3player.html"
+    template_name = "mediaplayer/mp3player.html"
     context_object_name = 'audiofiles'
 
     def get_queryset(self):
