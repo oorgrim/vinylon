@@ -6,8 +6,6 @@ node_modules/
 
 venv/
 
-media/
-
 __pycache__/
 
 migrations/
