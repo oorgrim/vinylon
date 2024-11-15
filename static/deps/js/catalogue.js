@@ -34,19 +34,30 @@ function removeFromStorage(tagQuery, tagList){
     }
 }
 
-function filterVinyls(vinylList){
+function filterVinyls(vinylList, appliedTags){
     let keyList = [];
     for(let i = 0; i < localStorage.length; i++) {
         let key = localStorage.key(i);
-        keyList.push(key)
+        keyList.push(key);
     }
-    for(let j = 0; j < vinylList.length; j++){
-        if(keyList.includes(vinylList[j])){
-            console.log(key)
-            vinylList[j].setAttribute("style", "display: block;");
+    if(keyList.length == 0){
+        for(let i = 0; i < vinylList.length; i++){
+            vinylList[i].setAttribute("style", "display: block;");
         }
-        else{
-            vinylList[j].setAttribute("style", "display: none;");
+    }
+    else{
+        for(let i = 0; i < vinylList.length; i++){
+            vinylList[i].setAttribute("style", "display: none;");
+        }
+        for(let i = 0; i < vinylList.length; i++){
+            for(let j = 0; j < appliedTags[i].children.length; j++){
+                if(keyList.includes(appliedTags[i].children[j].innerText)){
+                    console.log(vinylList[i].children[2].innerText + ':' + appliedTags[i].children[j].innerText);
+                    vinylList[i].setAttribute("style", "display: block;");
+                }
+                
+            }
+            
         }
     }
 }
@@ -55,6 +66,7 @@ function buttonClick(button) {
     tagName = button.value;
     let tagList = document.getElementsByClassName("searchTag")
     let vinylList = document.getElementsByClassName("vinyl_record")
+    let appliedTags = document.getElementsByClassName("vinyl_tags")
 
     if (button.style.backgroundColor == 'rgb(142, 191, 186)') {
         button.style.backgroundColor = 'black';
@@ -66,32 +78,5 @@ function buttonClick(button) {
         button.style.color = 'black';
         addToStorage(tagName, tagList);
     }
-    filterVinyls(vinylList);
+    filterVinyls(vinylList, appliedTags);
 }
-
-
-$(document).ready(function() {
-// тут прверка нажатия и удаление
-$('#test').click(function() {
-    alert('Button clicked!');
-});
-
-$(document).on('click', '.delete-vinyl', function(e) {
-    e.preventDefault();
-    $.ajax({
-        type: 'POST',
-        url: '{% url "cart:cart_delete" %}',
-        data: {
-            vinyl_id: $(this).data('index'),
-            csrfmiddlewaretoken: '{{ csrf_token }}',
-            action: 'post'
-        },
-        success: function(json) {
-            location.reload();
-        },
-        error: function(xhr, errmsg, err) {
-            console.error(xhr.status + ": " + xhr.responseText);
-        }
-    });
-});
-});

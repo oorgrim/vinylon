@@ -7,7 +7,7 @@ def cart_summary(request):
     cart = Cart(request)
     cart_vinyls = cart.get_prods
     # cart_vinyls = cart.get_prods()
-    return render(request, "cart_summary.html", {"cart_vinyls": cart_vinyls})
+    return render(request, "cart/cart_summary.html", {"cart_vinyls": cart_vinyls})
 
 
 def cart_add(request):

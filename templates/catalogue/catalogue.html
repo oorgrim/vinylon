@@ -19,7 +19,13 @@
                 <h3 class="artist">{{ vinyl.artist }}</h3>
                 <h1 class="price">{{ vinyl.price }} $</h1>
                 <a href="{% url 'catalogue:vinyldetail' vinyl.id %}">View Vinyl</a>
-                <button type="button" value="{{vinyl.id}}" class="btn btn-secondary to_stock" id="add-cart">Add to cart</button>
+                <button type="button" 
+                    value="{{vinyl.id}}" 
+                    class="btn btn-secondary to_stock" 
+                    id="add-cart" data-url="{% url 'cart:cart_add' %}"
+                    data-csrf-token="{{ csrf_token }}">
+                    Add to cart
+                </button>
                 <div class="vinyl_tags">
                     {% for tag in vinyl.tags.all %}
                         <div class="tag" data-tag="{{ tag.name }}">{{ tag.name }}</div>
@@ -41,5 +47,7 @@
         {% endif %}
     </div>
 
+    <script src="{% static 'deps/js/jquery/jquery-3.7.0.min.js'%}"></script>
+    <script src="{% static 'deps/js/add-cart.js'%}"></script>
     <script src="{% static 'deps/js/catalogue.js'%}"></script>
 {% endblock %}
