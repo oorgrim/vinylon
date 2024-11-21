@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     sessionStorage.clear();
     localStorage.clear();
-    console.log("cleared");
     // for(let i=0; i<localStorage.length; i++) {
     //     let key = localStorage.key(i);
     //     alert(`${key}: ${localStorage.getItem(key)}`);
@@ -10,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 let searchTagList = document.getElementsByClassName("searchTag");
-console.log(1)
 for (let i = 0; i < searchTagList.length; i++) {
     searchTagList[i].addEventListener('click', () => {
         buttonClick(searchTagList[i]);
@@ -40,6 +38,11 @@ function filterVinyls(vinylList, appliedTags){
         let key = localStorage.key(i);
         keyList.push(key);
     }
+
+    if(keyList.includes("djdt.show")){
+        keyList.pop("djdt.show")
+    }
+
     if(keyList.length == 0){
         for(let i = 0; i < vinylList.length; i++){
             vinylList[i].setAttribute("style", "display: block;");
@@ -52,7 +55,6 @@ function filterVinyls(vinylList, appliedTags){
         for(let i = 0; i < vinylList.length; i++){
             for(let j = 0; j < appliedTags[i].children.length; j++){
                 if(keyList.includes(appliedTags[i].children[j].innerText)){
-                    console.log(vinylList[i].children[2].innerText + ':' + appliedTags[i].children[j].innerText);
                     vinylList[i].setAttribute("style", "display: block;");
                 }
                 
