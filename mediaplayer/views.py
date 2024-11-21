@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from .models import AudioFile
 from catalogue.models import VinylRecord, Tag
+from django.conf import settings
 
 class MediaPlayerView(TemplateView):
     model = AudioFile
@@ -25,6 +26,7 @@ class MediaPlayerView(TemplateView):
 
     def get_context_data(self, **kwargs: any) -> dict:
         context = super().get_context_data(**kwargs)
+        context['BASE_DIR'] = settings.BASE_DIR
         context['audiofiles'] = self.get_queryset()
         context['tags'] = Tag.objects.annotate(num_records=models.Count("records")).order_by("-num_records")[:10]
         context['vinyls'] = VinylRecord.objects.all()

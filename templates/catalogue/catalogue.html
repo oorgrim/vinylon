@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'layout/base.html' %}
 {% load static %}
 {% load i18n %}
 
@@ -22,7 +22,8 @@
                 <button type="button" 
                     value="{{vinyl.id}}" 
                     class="btn btn-secondary to_stock" 
-                    id="add-cart" data-url="{% url 'cart:cart_add' %}"
+                    id="add-cart" 
+                    data-url="{% url 'cart:cart_add' %}"
                     data-csrf-token="{{ csrf_token }}">
                     Add to cart
                 </button>
