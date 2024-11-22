@@ -8,6 +8,9 @@ from django.db.models import Q
 from itertools import chain
 from icecream import ic
 from django.shortcuts import render
+from .serializers import VinylRecordSerializer
+from rest_framework import generics
+from rest_framework import
 
 class CatalogueView(ListView):
     model = VinylRecord
@@ -43,3 +46,25 @@ class VinylDetail(DetailView):
         context['vinyl'] = self.get_object()
         context['vinyls'] = VinylRecord.objects.all()[:10]
         return context
+
+from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+
+class GpuListAPIView(APIView):
+    def get(self, request):
+        articles = Gpu.objects.all()
+        serializer = GpuSerializer(articles, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = GpuSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class GpuDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Gpu.objects.all()
+    serializer_class = GpuSerializer 
