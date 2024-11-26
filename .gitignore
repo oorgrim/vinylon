@@ -1,0 +1,15 @@
+access.log
+
+node_modules/
+
+/coverage/
+
+venv/ 
+
+__pycache__/
+
+migrations/
+
+media/
+
+db.sqlite3

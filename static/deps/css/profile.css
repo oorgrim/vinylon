@@ -1,0 +1,174 @@
+body {
+    background-color: rgb(68, 165, 192);
+    color: rgb(255, 255, 255);
+}
+p {
+    font-size: 20px;
+}
+.container {
+    margin-top: 50px;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    flex: 0 0 200px; 
+}
+
+.avatar img {
+    width: 100%; 
+    height: auto; 
+    border-radius: 50%; 
+}
+
+.profile-info {
+    flex: 1; 
+    text-align: center;
+}
+
+.profile-info h1 {
+    margin-bottom: 20px;
+}
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.image-container {
+    text-align: center;
+    margin-top: 40px; 
+}
+
+.floating-image {
+    max-width: 100%; 
+    height: auto; 
+}
+
+/* .row {
+    margin: -100px;
+} */
+
+.firstLastNamesDiv {
+}
+
+.lastNameDiv, .firstNameDiv {
+    height: auto;
+    border-radius: 10px;
+    padding: 4px;
+    margin-top: 20px;
+    background-color: rgb(194, 76, 57);
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 100px;
+    width: 200px;
+    background-color: rgb(237, 62, 35);
+    padding: 20px;
+    height: 100%;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    margin-bottom: 10px;
+    text-decoration: none;
+}
+
+.container {
+    /* margin-left: 220px;  */
+}
+
+.avatar img {
+    border-radius: 50%;
+}
+.left {
+    text-align: left;
+    font-weight: bold; 
+}
+.right {
+    float: right;
+}
+
+.profile-page {
+    overflow-y: auto;
+}
+
+.saveBtn {
+    background-color: pink;
+}
+
+
+
+body {
+    background-color: rgb(201, 52, 29);
+    color: rgb(255, 255, 255);
+}
+
+.container {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center; /* Центрирование содержимого */
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Центрирование содержимого */
+}
+
+.avatar {
+    flex: 0 0 200px; 
+    text-align: center; /* Центрирование аватара */
+}
+
+.profile-info {
+    text-align: center; /* Центрирование информации о профиле */
+}
+
+.profile-info h1 {
+    margin-bottom: 20px;
+}
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.firstLastNamesDiv {
+}
+
+.lastNameDiv, .firstNameDiv {
+    height: auto;
+    border-radius: 10px;
+    padding: 4px;
+    margin-top: 20px;
+    background-color: rgb(194, 76, 57);
+    text-align: center; /* Центрирование текста */
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 100px;
+    width: 200px;
+    background-color: rgb(237, 62, 35);
+    padding: 20px;
+    height: 100%;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    margin-bottom: 10px;
+    text-decoration: none;
+}
+
+.saveBtn {
+    background-color: pink;
+}

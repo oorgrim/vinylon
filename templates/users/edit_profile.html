@@ -1,0 +1,21 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'deps/css/dashboard.css' %}">
+    <title>{% trans "Редактировать профиль" %}</title>
+</head>
+<body>
+    <div class="container">
+        <h1>{% trans "Редактировать профиль" %}</h1>
+        <form method="post" enctype="multipart/form-data" class="profile-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-save">{% trans "Сохранить изменения" %}</button>
+        </form>
+    </div>
+</body>
+</html>

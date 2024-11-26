@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <title>Личный кабинет</title>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Личный кабинет</h1>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'users:profile' %}">Профиль</a></li>
+                    <li><a href="{% url 'users:password_change' %}">Изменить пароль</a></li>
+                    <li><a href="{% url 'users:logout' %}">Выход</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main class="main-content">
+            <h2>Привет, {{ user.username }}!</h2>
+            <p>Здесь вы можете просмотреть и редактировать свою информацию.</p>
+        </main>
+    </div>
+</body>
+</html>
