@@ -1,0 +1,96 @@
+<style>
+    .orders-title {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.order-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+.order-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+.order-detail {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #555;
+}
+
+.status-completed {
+    color: green;
+    font-weight: bold;
+}
+
+.status-in-progress {
+    color: orange;
+    font-weight: bold;
+}
+
+.complete-link {
+    margin-left: 1rem;
+    font-size: 0.9rem;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.complete-link:hover {
+    text-decoration: underline;
+}
+
+.order-items {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.order-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+    font-size: 1rem;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.no-orders {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #999;
+}
+
+</style>
+
+<h2 class="orders-title">My Orders</h2>
+{% for order in orders %}
+    <div class="order-card">
+        <h3 class="order-title">Order #{{ order.id }}</h3>
+        <p class="order-detail">Created at: {{ order.created_at }}</p>
+        <p class="order-detail">Status: 
+            {% if order.is_completed %}
+                <span class="status-completed">Completed</span>
+            {% else %}
+                <span class="status-in-progress">in progress</span>
+                <a class="complete-link" href="{% url 'orders:complete_order' order.id %}">mark as completed</a>
+            {% endif %}
+        </p>
+        <ul class="order-items">
+            {% for item in order.items.all %}
+                <li class="order-item">{{ item.vinyl.title }} - ${{ item.price }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% empty %}
+    <p class="no-orders">youo have no orders</p>
+{% endfor %}

@@ -36,3 +36,8 @@ class Cart():
         if vinyl_id in self.cart:
             del self.cart[vinyl_id]
         self.session.modified = True
+
+    def clear(self):
+        """добавила очищение корзины"""
+        self.session['session_key'] = {}
+        self.session.modified = True

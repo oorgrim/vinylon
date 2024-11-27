@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .model import VinylRecord
+from .models import VinylRecord
 
 class VinylRecordSerializer(serializers.ModelSerializer):
     class Meta:
-        model VinylRecord
+        model = VinylRecord
         fields = '__all__ '

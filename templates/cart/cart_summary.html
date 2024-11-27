@@ -41,6 +41,10 @@
                     </div>
                 </div>
             </div>
+            <form method="post" action="{% url 'orders:create_order' %}">
+                {% csrf_token %}
+                <button type="submit">place oorder</button>
+            </form>            
         {% endfor %}
     {% else %}
         <p>There is nothing in your cart</p>

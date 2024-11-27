@@ -10,7 +10,7 @@ from icecream import ic
 from django.shortcuts import render
 from .serializers import VinylRecordSerializer
 from rest_framework import generics
-from rest_framework import
+
 
 class CatalogueView(ListView):
     model = VinylRecord
@@ -52,19 +52,20 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-class GpuListAPIView(APIView):
+class TagListAPIView(APIView):
     def get(self, request):
-        articles = Gpu.objects.all()
-        serializer = GpuSerializer(articles, many=True)
+        tags = Tag.objects.all()
+        serializer = VinylRecordSerializer(tags, many=True)  
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = GpuSerializer(data=request.data)
+        serializer = VinylRecordSerializer(data=request.data)  
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class GpuDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Gpu.objects.all()
-    serializer_class = GpuSerializer 
+
+class TagDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = VinylRecordSerializer  
