@@ -60,7 +60,7 @@ p {
     border-radius: 10px;
     padding: 4px;
     margin-top: 20px;
-    background-color: rgb(194, 76, 57);
+    background-color: rgb(57, 164, 194);
 }
 
 .sidebar {
@@ -68,7 +68,7 @@ p {
     left: 0;
     top: 100px;
     width: 200px;
-    background-color: rgb(237, 62, 35);
+    background-color: rgb(35, 190, 237);
     padding: 20px;
     height: 100%;
 }
@@ -97,6 +97,7 @@ p {
 
 .profile-page {
     overflow-y: auto;
+    margin-bottom: 100px;
 }
 
 .saveBtn {
@@ -106,29 +107,29 @@ p {
 
 
 body {
-    background-color: rgb(201, 52, 29);
+    background-color: rgb(13, 127, 142);
     color: rgb(255, 255, 255);
 }
 
 .container {
     margin-top: 50px;
     display: flex;
-    justify-content: center; /* Центрирование содержимого */
+    justify-content: center; 
 }
 
 .profile-header {
     display: flex;
     align-items: center;
-    justify-content: center; /* Центрирование содержимого */
+    justify-content: center; 
 }
 
 .avatar {
     flex: 0 0 200px; 
-    text-align: center; /* Центрирование аватара */
+    text-align: center; 
 }
 
 .profile-info {
-    text-align: center; /* Центрирование информации о профиле */
+    text-align: center;
 }
 
 .profile-info h1 {
@@ -148,8 +149,8 @@ body {
     border-radius: 10px;
     padding: 4px;
     margin-top: 20px;
-    background-color: rgb(194, 76, 57);
-    text-align: center; /* Центрирование текста */
+    background-color: rgb(57, 164, 194);
+    text-align: center;
 }
 
 .sidebar {
@@ -157,7 +158,7 @@ body {
     left: 0;
     top: 100px;
     width: 200px;
-    background-color: rgb(237, 62, 35);
+    background-color: rgb(35, 207, 237);
     padding: 20px;
     height: 100%;
 }

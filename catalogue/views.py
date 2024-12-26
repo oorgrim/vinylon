@@ -10,6 +10,8 @@ from icecream import ic
 from django.shortcuts import render
 from .serializers import VinylRecordSerializer
 from rest_framework import generics
+from orders.models import OrderItem
+
 
 
 class CatalogueView(ListView):
@@ -23,18 +25,21 @@ class CatalogueView(ListView):
         vinyls_list = VinylRecord.objects.all()
 
         if query:
-            print(query)
             vinyls_list = VinylRecord.objects.filter(
                 Q(title__icontains=query) | Q(artist__name__icontains=query)
             )
         return vinyls_list
 
-    def get_context_data(self, **kwargs: any) -> dict:
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tags'] = Tag.objects.annotate(num_records=models.Count("records")).order_by("-num_records")[:10]
         context['vinyls'] = self.get_queryset()
-        return context
+        user_orders = OrderItem.objects.filter(order__user=self.request.user)
+        vinyls_in_orders = user_orders.values_list('vinyl', flat=True)
+        user_ordered_vinyls = VinylRecord.objects.filter(id__in=vinyls_in_orders)
+        context['your_songs'] = user_ordered_vinyls 
 
+        return context
 
 class VinylDetail(DetailView):
     model = VinylRecord
@@ -69,3 +74,11 @@ class TagListAPIView(APIView):
 class TagDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Tag.objects.all()
     serializer_class = VinylRecordSerializer  
+
+
+def catalogue_view(request):
+    user_orders = OrderItem.objects.filter(order__user=request.user)
+    vinyls_in_orders = user_orders.values_list('vinyl', flat=True)
+    vinyls = VinylRecord.objects.filter(id__in=vinyls_in_orders)
+
+    return render(request, 'catalogue/catalogue.html', {'vinyls': vinyls})

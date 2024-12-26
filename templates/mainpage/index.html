@@ -14,7 +14,6 @@
           {% trans 'Здесь вы можете заказать виниловые пластинки' %}
         </p>
 
-        <!-- Основной контент с пластинками -->
         <ul>
           {% for vinyl in vinyls %}
             <li>{{ vinyl.title }} - {{ vinyl.artist }} - {{ vinyl.price }} $</li>
@@ -22,7 +21,6 @@
         </ul>
       </div>
 
-      <!-- Боковая панель для авторизованных пользователей -->
       {% if user.is_authenticated %}
         <div class="sidebar">
           <h2>{% trans 'Ваши данные' %}</h2>
@@ -52,9 +50,7 @@
         </div>
       {% endif %}
 
-      <!-- Топ-10 тегов -->
     </div>
-    <!-- Пагинация -->
     <div class="pagination">
       {% if is_paginated %}
         <span>{% trans 'Страница' %} {{ page_obj.number }}{% trans 'из' %} {{ page_obj.paginator.num_pages }}</span>

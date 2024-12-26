@@ -5,12 +5,17 @@
 {% block content %}
     <link rel="stylesheet" href="{% static 'deps/css/mediaplayer.css'%}">
     <div class="media_body">
-        {% for vinyl in vinyls %} 
+        {% for vinyl in vinyls %}
             <div class="{{vinyl.title}}">
-                <img src="/media/{{vinyl.cover}}">
-                {{vinyl.title}}
-                {% for audio in audiofiles%}
-                    {% if audio.vinyl_record.title == vinyl.title%}
+                <center><p id="vinylTitle">{{vinyl.title}}</p></center>
+                <div class="image-container">
+                    <img id="recorder" src="/static/deps/images/recorder.png" alt="Recorder">
+                    <img id="vinyl" src="/static/deps/images/vinyl.png" alt="Vinyl" class="vinyl-img">
+                    <img id="coverImg" src="/media/{{vinyl.cover}}" alt="Cover">
+                    <img id="regulator" src="/static/deps/images/regulator.png" alt="Regulator" class="regulator-img">
+                </div>
+                {% for audio in audiofiles %}
+                    {% if audio.vinyl_record.title == vinyl.title %}
                         <div class="song" id="song" data-dir="{{BASE_DIR}}" onclick="sendValue(this)">
                             <p>{{ audio.title }}</p>
                             <p style="display: none;">{{ audio.audio_file }}</p>
@@ -18,14 +23,44 @@
                     {% endif %}
                 {% endfor %}
             </div>
-        {% endfor %}   
+        {% endfor %}
     </div>
-    <hr>   
-    {% for audio in audiofiles%}
-        <audio controls>
-            {{ audio.audio_file }}
+
+    {% for audio in audiofiles %}
+        <audio controls id="audio{{ forloop.counter }}" class="audio-player">
             <source src="/media/{{ audio.audio_file }}" type="audio/mpeg">
+            <div class="custom-player">
+                <button class="play-pause-btn" id="play-pause-btn{{ forloop.counter }}">▶</button>
+                <span id="current-time{{ forloop.counter }}">00:00</span>
+                <input id="progress-bar{{ forloop.counter }}" type="range" value="0" max="100">
+                <span id="duration{{ forloop.counter }}">00:00</span>
+            </div>
         </audio>
-    {% endfor %}   
+    {% endfor %}
+
     <script src="{% static 'deps/js/mediaplayer.js'%}"></script>
+    <script>
+        // обратотчик клика на регулятор (это штука которая на виниловой пластинке)
+        const regulators = document.querySelectorAll('.regulator-img');
+regulators.forEach((regulator, index) => {
+    regulator.addEventListener('click', () => {
+        const imageContainer = regulator.closest('.image-container');
+        const vinyl = imageContainer.querySelector('.vinyl-img');
+        const coverImg = imageContainer.querySelector('#coverImg');
+        const audioPlayer = document.querySelector(`#audio${index + 1}`);
+        
+        if (audioPlayer.paused) {
+            audioPlayer.play();
+            regulator.classList.add('playing');
+            vinyl.classList.add('rotate');
+            coverImg.classList.add('rotate'); 
+        } else {
+            audioPlayer.pause();
+            regulator.classList.remove('playing');
+            vinyl.classList.remove('rotate');
+            coverImg.classList.remove('rotate'); 
+        }
+    });
+});
+    </script>
 {% endblock %}

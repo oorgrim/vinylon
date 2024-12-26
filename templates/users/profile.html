@@ -1,4 +1,4 @@
-{% extends "users/users.html" %}
+{% extends 'layout/base.html' %}
 {% load i18n %}
 {% load static %}
 
@@ -8,11 +8,8 @@
 <link rel="stylesheet" type="text/css" href="{% static 'deps/css/profile.css' %}">
 
 <div class="profile-page">
-        <div class="col-md-9">
-            <div class="profile-info text-center">
-                <h1>{% trans "Профиль пользователя" %}</h1>
-                <p>{% trans "Добро пожаловать" %}, {{ user.username }}!</p>
-            </div>
+                <center><h1>{% trans "Your Profile" %}</h1>
+                <p>{% trans "Welcome" %}, {{ user.username }}!</p></center>
 
             <div class="container mt-5">
                 <div class="info">
@@ -23,13 +20,13 @@
                                     <img src="{{ request.user.userprofile.avatar.url }}" alt="Аватар" class="img-fluid" />
                                     <form method="POST" action="{% url 'users:clear_avatar' %}" style="display:inline;">
                                         {% csrf_token %}
-                                        <button type="submit" class="btn btn-danger btn-sm mt-2">{% trans "Очистить аватар" %}</button>
+                                        <button type="submit" class="btn btn-danger btn-sm mt-2">{% trans "Remove Avatar" %}</button>
                                     </form>
                                 {% else %}
                                     <img src="{% static 'deps/images/default_ava.jpg' %}" alt="{% trans 'Дефолтный аватар' %}" class="img-fluid" />
                                 {% endif %}
                             {% else %}
-                                <p>{% trans "Пожалуйста, войдите в систему, чтобы увидеть ваш аватар." %}</p>
+                                <p>{% trans "Please log in to see your avatar." %}</p>
                             {% endif %}
                         </div>
                         <div class="row mt-4">
@@ -38,11 +35,11 @@
                                     {% csrf_token %}
                                     <div class="firstLastNamesDiv">
                                         <div class="firstNameDiv">
-                                            <label for="first_name">{% trans "Имя" %}:</label>
+                                            <label for="first_name">{% trans "Name" %}:</label>
                                             <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" class="form-control" required>
                                         </div>
                                         <div class="lastNameDiv">
-                                            <label for="last_name">{% trans "Фамилия" %}:</label>
+                                            <label for="last_name">{% trans "Surname" %}:</label>
                                             <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" class="form-control" required>
                                         </div>
                                     </div>
@@ -51,7 +48,7 @@
                                         <input type="email" id="email" name="email" value="{{ user.email }}" class="form-control" required>
                                     </div>
                                     <div class="lastNameDiv">
-                                        <label for="phone">{% trans "Телефон" %}:</label>
+                                        <label for="phone">{% trans "Phone Number" %}:</label>
                                         <input type="text" id="phone" name="phone" value="{{ user.userprofile.phone }}" class="form-control">
                                     </div>
                                     <div class="lastNameDiv">
@@ -63,25 +60,25 @@
 
                                 <div id="profileDisplay">
                                     <div class="firstNameDiv">
-                                        <p><strong>{% trans "Имя" %}:</strong> <span id="displayFirstName">{{ user.first_name }}</span></p>
+                                        <p><strong>{% trans "Name" %}:</strong> <span id="displayFirstName">{{ user.first_name }}</span></p>
                                     </div>
                                     <div class="lastNameDiv">
-                                        <p><strong>{% trans "Фамилия" %}:</strong> <span id="displayLastName">{{ user.last_name }}</span></p>
+                                        <p><strong>{% trans "Surname" %}:</strong> <span id="displayLastName">{{ user.last_name }}</span></p>
                                     </div>
                                     <div class="lastNameDiv">
                                         <p><strong>{% trans "Email" %}:</strong> <span id="displayEmail">{{ user.email }}</span></p>
                                     </div>
                                     <div class="lastNameDiv">
-                                        <p><strong>{% trans "Телефон" %}:</strong> <span id="displayPhone">{{ user.userprofile.phone }}</span></p>
+                                        <p><strong>{% trans "Phone Number" %}:</strong> <span id="displayPhone">{{ user.userprofile.phone }}</span></p>
                                     </div>
-                                    <button class="btn btn-secondary mt-3" id="editButton">{% trans "Редактировать" %}</button>
+                                    <button class="btn btn-secondary mt-3" id="editButton">{% trans "Edit" %}</button>
                                 </div>
                             </div>
                         </div>
                     </div>        
                 </div>
 
-                <div class="col-md-8 mt-4">
+                <!-- <div class="col-md-8 mt-4">
                     <h4>{% trans "Ваши заказы" %}:</h4>
                     <ul class="list-group">
                         {% for order in orders %}
@@ -91,9 +88,9 @@
                         {% empty %}
                             <li class="list-group-item">{% trans "У вас нет заказов." %}</li>
                         {% endfor %}
-                    </ul>
+                    </ul> -->
 
-                    <h4 class="mt-4">{% trans "Ваша корзина" %}:</h4>
+                    <!-- <h4 class="mt-4">{% trans "Ваша корзина" %}:</h4>
                     <ul class="list-group">
                         {% for item in cart_items %}
                             <li class="list-group-item">
@@ -101,13 +98,15 @@
                             </li>
                         {% empty %}
                             <li class="list-group-item">{% trans "Ваша корзина пуста." %}</li>
-                        {% endfor %}
+                        {% endfor %} -->
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 </div>
+</div>
+
 
 <script>
     document.getElementById("editButton").onclick = function() {

@@ -42,14 +42,15 @@
                             <form action="{% url 'users:logout' %}" method="post" style="display:inline;">
                                 {% csrf_token %}
                                 <button type="submit" class="nav-link text-white" style="border: none; background: none; cursor: pointer;">
-                                    Log In
+                                    Log Out
                                 </button>
                             </form>
                         </li>
                         {% else %}
-                        <li><a class="nav-link text-white" href="{% url 'users:login' %}">Log Out</a></li>
+                        <li class="ml-auto"><a class="nav-link text-white" href="{% url 'users:login' %}">Log In</a></li>
                         {% endif %}
                     </ul>
+                    
                 </div>
             </div>
         </nav>
@@ -65,11 +66,11 @@
                 </div>
                 
                 <div class="col-md-4 mb-3">
-                    <h5 class="mb-3">Полезные ссылки</h5>
+                    <h5 class="mb-3">Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="" class="text-white">Главная</a></li>
-                        <li><a href="{% url 'catalogue:catalogue' %}" class="text-white">Каталог</a></li>
-                        <li><a href="{% url 'users:profile' %}" class="text-white">Личный кабинет</a></li>
+                        <li><a href="" class="text-white">Main Page</a></li>
+                        <li><a href="{% url 'catalogue:catalogue' %}" class="text-white">Catalogue</a></li>
+                        <li><a href="{% url 'users:profile' %}" class="text-white">Your Profile</a></li>
                     </ul>
                 </div>
     
@@ -79,18 +80,18 @@
                         <a href="https://www.facebook.com" target="_blank">
                             <img src="{% static 'deps/icons/facebook.svg' %}" alt="Facebook" width="32" class="me-3">
                         </a>
-                        <a href="https://www.instagram.com" target="_blank">
+                        <!-- <a href="https://www.instagram.com" target="_blank">
                             <img src="{% static 'deps/icons/instagram.svg' %}" alt="Instagram" width="32" class="me-3">
                         </a>
                         <a href="https://www.twitter.com" target="_blank">
-                            <img src="{% static 'deps/icons/twitter.svg' %}" alt="Twitter" width="32" class="me-3">
+                            <img src="{% static 'deps/icons/twitter.svg' %}" alt="Twitter" width="32" class="me-3"> -->
                         </a>
                     </div>
                 </div>
             </div>
             
             <div class="text-center mt-3">
-                <small>© 2024 Vinylon. Все права защищены.</small>
+                <small>© 2024 Vinylon. All rights protected.</small>
             </div>
         </div>
     </footer>    

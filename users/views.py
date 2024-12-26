@@ -34,9 +34,6 @@ class RegisterView(FormView):
         user = form.save(commit=False)
         user.set_password(form.cleaned_data["password"])
         user.save()
-
-        UserProfile.objects.create(user=user)
-
         login(self.request, user)
         logger.info(f"Новый пользователь зарегистрирован: {user.username}")
         return super().form_valid(form)
@@ -98,13 +95,17 @@ def dashboard(request):
 
 @login_required
 def edit_profile(request):
-    user_profile = UserProfile.objects.get(user=request.user)
+    try:
+        user_profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        # If no profile exists, create a new one
+        user_profile = UserProfile.objects.create(user=request.user)
 
     if request.method == 'POST':
         form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
         if 'remove_avatar' in request.POST and request.POST['remove_avatar'] == '1':
-            user_profile.avatar.delete(save=False)  #удалить файл автавра
-            user_profile.avatar = None  #обнуляю
+            user_profile.avatar.delete(save=False) 
+            user_profile.avatar = None 
         elif form.is_valid():
             user = request.user
             user.first_name = request.POST.get('first_name')
@@ -118,6 +119,7 @@ def edit_profile(request):
         form = UserProfileForm(instance=user_profile)
 
     return render(request, 'users/edit_profile.html', {'form': form})
+
 
 
 @login_required

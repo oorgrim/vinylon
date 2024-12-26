@@ -13,9 +13,7 @@ class HomePageView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Отображение топ-10 тегов
         context['top_tags'] = Tag.objects.annotate(num_records=Count('records')).order_by('-num_records')[:10]
-        # Отображение заказов для авторизованных пользователей
         # if self.request.user.is_authenticated:
         #     context['orders'] = Order.objects.filter(user=self.request.user)
             
