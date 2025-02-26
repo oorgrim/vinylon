@@ -1,19 +1,10 @@
 from django.shortcuts import render
 from django.db import models
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
-from django.contrib.auth.models import User
 from django.db.models import Q
+from django.conf import settings
 from .models import AudioFile
 from catalogue.models import VinylRecord, Tag
-from django.conf import settings
-from orders.models import Order, OrderItem
-
-from django.shortcuts import render
-from django.db.models import Q
-from django.conf import settings
-from .models import AudioFile
-from catalogue.models import VinylRecord
 from orders.models import OrderItem
 
 class MediaPlayerView(TemplateView):
@@ -22,10 +13,13 @@ class MediaPlayerView(TemplateView):
     context_object_name = 'audiofiles'
 
     def get_queryset(self):
-        user_orders = OrderItem.objects.filter(order__user=self.request.user)
-        vinyls_in_orders = user_orders.values_list('vinyl', flat=True)
-        audiofiles = AudioFile.objects.filter(vinyl_record__in=vinyls_in_orders)
-        
+        if self.request.user.is_authenticated:  # Проверяем, авторизован ли пользователь
+            user_orders = OrderItem.objects.filter(order__user=self.request.user)
+            vinyls_in_orders = user_orders.values_list('vinyl', flat=True)
+            audiofiles = AudioFile.objects.filter(vinyl_record__in=vinyls_in_orders)
+        else:
+            audiofiles = AudioFile.objects.none()  # Если не авторизован, возвращаем пустой QuerySet
+
         query = self.request.GET.get("q")
         if query:
             audiofiles = audiofiles.filter(
@@ -33,7 +27,7 @@ class MediaPlayerView(TemplateView):
             )
         return audiofiles
 
-    def get_context_data(self, **kwargs: any) -> dict:
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['BASE_DIR'] = settings.BASE_DIR
         audiofiles = self.get_queryset()

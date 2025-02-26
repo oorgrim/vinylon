@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
 from django.urls import reverse_lazy
@@ -11,7 +11,9 @@ from django.shortcuts import render
 from .serializers import VinylRecordSerializer
 from rest_framework import generics
 from orders.models import OrderItem
-
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
 
 class CatalogueView(ListView):
@@ -34,12 +36,17 @@ class CatalogueView(ListView):
         context = super().get_context_data(**kwargs)
         context['tags'] = Tag.objects.annotate(num_records=models.Count("records")).order_by("-num_records")[:10]
         context['vinyls'] = self.get_queryset()
-        user_orders = OrderItem.objects.filter(order__user=self.request.user)
-        vinyls_in_orders = user_orders.values_list('vinyl', flat=True)
-        user_ordered_vinyls = VinylRecord.objects.filter(id__in=vinyls_in_orders)
-        context['your_songs'] = user_ordered_vinyls 
+
+        if self.request.user.is_authenticated:
+            user_orders = OrderItem.objects.filter(order__user=self.request.user)
+            vinyls_in_orders = user_orders.values_list('vinyl', flat=True)
+            user_ordered_vinyls = VinylRecord.objects.filter(id__in=vinyls_in_orders)
+            context['your_songs'] = user_ordered_vinyls
+        else:
+            context['your_songs'] = []
 
         return context
+
 
 class VinylDetail(DetailView):
     model = VinylRecord
@@ -52,10 +59,6 @@ class VinylDetail(DetailView):
         context['vinyls'] = VinylRecord.objects.all()[:10]
         return context
 
-from rest_framework import generics
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
 
 class TagListAPIView(APIView):
     def get(self, request):
@@ -77,8 +80,11 @@ class TagDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 def catalogue_view(request):
-    user_orders = OrderItem.objects.filter(order__user=request.user)
-    vinyls_in_orders = user_orders.values_list('vinyl', flat=True)
-    vinyls = VinylRecord.objects.filter(id__in=vinyls_in_orders)
+    if request.user.is_authenticated:
+        user_orders = OrderItem.objects.filter(order__user=request.user)
+        vinyls_in_orders = user_orders.values_list('vinyl', flat=True)
+        vinyls = VinylRecord.objects.filter(id__in=vinyls_in_orders)
+    else:
+        vinyls = VinylRecord.objects.none()
 
     return render(request, 'catalogue/catalogue.html', {'vinyls': vinyls})

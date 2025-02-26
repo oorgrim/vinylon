@@ -174,7 +174,7 @@ LOGOUT_REDIRECT_URL = 'users:login'
 FILE_UPLOAD_MAX_MEMORY_SIZE = 1048576000  # 1000 MB (1 GB)
 DATA_UPLOAD_MAX_MEMORY_SIZE = 1048576000  # 1000 MB (1 GB)
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # хранение сессий в базе данных
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # хранение сессий в бд!
 SESSION_COOKIE_NAME = 'sessionid'  
 SESSION_COOKIE_AGE = 1209600  
 SESSION_SAVE_EVERY_REQUEST = True  
