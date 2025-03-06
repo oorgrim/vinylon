@@ -1,12 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     sessionStorage.clear();
-    localStorage.clear();
-    // for(let i=0; i<localStorage.length; i++) {
-    //     let key = localStorage.key(i);
-    //     alert(`${key}: ${localStorage.getItem(key)}`);
-    // }
 });
-
 
 let searchTagList = document.getElementsByClassName("searchTag");
 for (let i = 0; i < searchTagList.length; i++) {
@@ -15,70 +9,59 @@ for (let i = 0; i < searchTagList.length; i++) {
     });
 }
 
-
-function addToStorage(tagQuery, tagList){
-    for(let i = 0; i < tagList.length; i++){
-        if(tagQuery == tagList[i].value){
-            localStorage.setItem(`${tagQuery}`, tagQuery);              
+function addToStorage(tagQuery, tagList) {
+    for (let i = 0; i < tagList.length; i++) {
+        if (tagQuery === tagList[i].value) {
+            localStorage.setItem(tagQuery, tagQuery);
         }
     }
 }
 
-function removeFromStorage(tagQuery, tagList){
-    for(let i = 0; i < tagList.length; i++){
-        if(tagQuery == tagList[i].value){
-            localStorage.removeItem(tagQuery);              
+function removeFromStorage(tagQuery, tagList) {
+    for (let i = 0; i < tagList.length; i++) {
+        if (tagQuery === tagList[i].value) {
+            localStorage.removeItem(tagQuery);
         }
     }
 }
 
-function filterVinyls(vinylList, appliedTags){
+function filterVinyls(vinylList, appliedTags) {
     let keyList = [];
-    for(let i = 0; i < localStorage.length; i++) {
+    
+    for (let i = 0; i < localStorage.length; i++) {
         let key = localStorage.key(i);
         keyList.push(key);
     }
+    
+    keyList = keyList.filter(key => key !== "djdt.show");
 
-    if(keyList.includes("djdt.show")){
-        keyList.pop("djdt.show")
-    }
+    let keySet = new Set(keyList);
 
-    if(keyList.length == 0){
-        for(let i = 0; i < vinylList.length; i++){
-            vinylList[i].setAttribute("style", "display: block;");
+    if (keySet.size === 0) {
+        for (let i = 0; i < vinylList.length; i++) {
+            vinylList[i].style.display = "block";
         }
-    }
-    else{
-        for(let i = 0; i < vinylList.length; i++){
-            vinylList[i].setAttribute("style", "display: none;");
-        }
-        for(let i = 0; i < vinylList.length; i++){
-            for(let j = 0; j < appliedTags[i].children.length; j++){
-                if(keyList.includes(appliedTags[i].children[j].innerText)){
-                    vinylList[i].setAttribute("style", "display: block;");
-                }
-                
-            }
-            
+    } else {
+        for (let i = 0; i < vinylList.length; i++) {
+            let hasMatch = [...appliedTags[i].children].some(tag => keySet.has(tag.innerText));
+            vinylList[i].style.display = hasMatch ? "block" : "none";
         }
     }
 }
 
 function buttonClick(button) {
-    tagName = button.value;
-    let tagList = document.getElementsByClassName("searchTag")
-    let vinylList = document.getElementsByClassName("vinyl_record")
-    let appliedTags = document.getElementsByClassName("vinyl_tags")
+    let tagName = button.value;
+    let tagList = document.getElementsByClassName("searchTag");
+    let vinylList = document.getElementsByClassName("vinyl_record");
+    let appliedTags = document.getElementsByClassName("vinyl_tags");
 
-    if (button.style.backgroundColor == 'rgb(142, 191, 186)') {
-        button.style.backgroundColor = 'black';
-        button.style.color = 'white';
-        removeFromStorage(tagName, tagList);
-    } 
-    else {
-        button.style.backgroundColor = 'rgb(142, 191, 186)';
-        button.style.color = 'black';
+    button.classList.toggle("selected");
+
+    if (button.classList.contains("selected")) {
         addToStorage(tagName, tagList);
+    } else {
+        removeFromStorage(tagName, tagList);
     }
+
     filterVinyls(vinylList, appliedTags);
 }

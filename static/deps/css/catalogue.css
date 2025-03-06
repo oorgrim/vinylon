@@ -113,3 +113,9 @@
     background-color: white;
     color: black;
 }
+
+.tagsForm input[type="button"].selected {
+    background-color: rgb(142, 191, 186);
+    color: black;
+}
+
